@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>
+		
+	</title>
+	<style type="text/css">
+		.itemOnStage{
+			position: absolute;
+		}
+		.duck{
+			height: 100px;
+			width: 100px;
+			position: absolute;
+			border-radius: 50%;
+			z-index: 2;
+		}
+	</style>
+</head>
+<body>
+	<button class="btn">начать игру</button>
+	<div class="itemOnStage" style="background-image: url(wave1.png); height: 100px; width: 1500px; top: 200px;"></div>
+	<div class="itemOnStage" style="background-image: url(wave2.png); height: 100px; width: 1500px; top: 300px;"></div>
+	<div class="itemOnStage" style="background-image: url(wave3.png); height: 100px; width: 1500px; top: 400px;"></div>
+
+	<div class="itemOnStage" style="background-image: url(1s.png); height: 600px; width: 100px; background-size: 100%;"></div>
+	<div class="itemOnStage" style="background-image: url(1s.png); height: 600px; width: 100px; left: 1500px;background-size: 100%;"></div>
+	<h1 class="scre" style="margin-left: 100px;">Очки:</h1>
+
+	<script type="text/javascript">
+		let btn = document.querySelector(".btn");
+		let wavesTop = [200, 300, 400]
+		let score = 0
+
+		btn.onclick = function(){
+			let itog = function(){
+				clearInterval(createDucks);
+				}
+			setTimeout(itog, 9000);
+			let createDucks = setInterval(createDuck, 500);
+
+		}
+		let randomNum = function(arg){
+			let random = Math.round(Math.random()*arg);
+			return random;
+		}
+
+		let createDuck = function(){
+			let duck = document.createElement("div");
+			document.body.appendChild(duck);
+			duck.classList.add("duck");
+			duck.style.top = wavesTop[randomNum(2)] + "px";
+			duck.style.left = randomNum(1500) + "px";
+			if(randomNum(2)==0){
+				duck.name = "good"
+				duck.style.backgroundImage = "url(1.png)"
+				duck.style.backgroundSize = "100%"
+			}else if(randomNum(2)==1){
+				duck.name = "normal"
+				duck.style.backgroundImage = "url(2.png)"
+				duck.style.backgroundSize = "100%"
+			}else if(randomNum(2)==2){
+				duck.name = "bad"
+				duck.style.backgroundImage = "url(3.png)"
+				duck.style.backgroundSize = "100%"
+			}				
+			
+			duck.onclick = function(){
+				if(duck.name == "good"){
+					score = score + 2
+				}
+				else if (duck.name == "bad"){
+					score = score - 2
+				}
+				else {
+					score = score + 1
+				}
+
+				duck.style.display = "none"
+				document.querySelector(".scre").innerHTML = score
+			}
+		}	
+		
+		
+
+		
+
+		
+	</script>
+</body>
+</html>
